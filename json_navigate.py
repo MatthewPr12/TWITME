@@ -1,4 +1,5 @@
 import json
+import jmespath
 
 
 def data_loading(file):
@@ -17,13 +18,13 @@ def recursive_items(data, prev=''):
                 prev = pre_prev
             elif isinstance(value, list) and value:
                 if isinstance(value[0], dict):
-                    prev += key + '.'
+                    prev += key + '[].'
                     for dct in value:
                         yield from recursive_items(dct, prev)
                 else:
                     yield prev + key, value
             else:
-                yield prev+key, value
+                yield prev + key, value
     else:
         for dct in data:
             yield from recursive_items(dct)
@@ -34,9 +35,15 @@ def display_keys(data):
         print(key)
 
 
+def goto_field(data, key):
+    val = jmespath.search(f"[*].{key}", data)
+    return val
+
+
 def main():
     data = data_loading('twitter1.json')
     display_keys(data)
+    print(goto_field(data, 'retweeted_status'))
 
 
 if __name__ == '__main__':
