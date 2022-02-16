@@ -36,14 +36,17 @@ def display_keys(data):
 
 
 def goto_field(data, key):
-    val = jmespath.search(f"[*].{key}", data)
+    if isinstance(data, dict):
+        val = jmespath.search(f"{key}", data)
+    elif isinstance(data, list):
+        val = jmespath.search(f"[*].{key}", data)
     return val
 
 
 def main():
     data = data_loading('twitter1.json')
     display_keys(data)
-    print(goto_field(data, 'retweeted_status'))
+    print(goto_field(data, 'users[].location'))
 
 
 if __name__ == '__main__':
