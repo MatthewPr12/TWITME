@@ -63,7 +63,8 @@ def main():
             continue
     display_keys(data)
     print('\033[96m' + 'cd <total path to the key>\n'
-                       'ls  # to see ALL the keys' + '\033[0m')
+                       'ls  # to see ALL the keys\n' +
+                       'q  # quit' + '\033[0m')
     while True:
         str_jmes = input('>>> ')
         res_lst = str_jmes.split()
@@ -75,6 +76,8 @@ def main():
             continue
         elif str_jmes == 'ls':
             display_keys(data)
+        elif str_jmes == 'q':
+            break
         else:
             print('\033[96m' + "command not found" + '\033[0m')
             continue
