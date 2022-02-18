@@ -8,7 +8,7 @@ def execute(acct):
     TWITTER_URL = 'https://api.twitter.com/1.1/friends/list.json'
 
     url = twurl.augment(TWITTER_URL,
-                        {'screen_name': acct, 'count': '10'})
+                        {'screen_name': acct, 'count': '20'})
 
     data = urllib.request.urlopen(url).read().decode()
 
