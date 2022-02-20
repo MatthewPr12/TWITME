@@ -22,9 +22,6 @@ platformdirs==2.4.0
 pydantic==1.9.0
 pylint==2.11.1
 pynput==1.7.3
-pyobjc-core==7.3
-pyobjc-framework-Cocoa==7.3
-pyobjc-framework-Quartz==7.3
 python-multipart==0.0.5
 requests==2.27.1
 six==1.16.0
