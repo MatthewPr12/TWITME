@@ -1,14 +1,28 @@
+"""
+navigate through a json file
+"""
 import json
 import jmespath
 
 
 def data_loading(file):
+    """
+    load json file
+    :param file:
+    :return:
+    """
     with open(file, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file)
     return data
 
 
 def recursive_items(data, prev=''):
+    """
+    generator to enter every key value if one is iterable
+    :param data:
+    :param prev:
+    :return:
+    """
     if isinstance(data, dict):
         for key, value in data.items():
             if isinstance(value, dict):
@@ -31,11 +45,22 @@ def recursive_items(data, prev=''):
 
 
 def display_keys(data):
+    """
+    show user all the keys with the path to them
+    :param data:
+    :return:
+    """
     for key, _ in recursive_items(data):
         print(key)
 
 
 def goto_field(data, key):
+    """
+    show value of the given key
+    :param data:
+    :param key:
+    :return:
+    """
     if isinstance(data, dict):
         val = jmespath.search(f"{key}", data)
     elif isinstance(data, list):
@@ -44,6 +69,11 @@ def goto_field(data, key):
 
 
 def check_way(way: str):
+    """
+    check if input is valid
+    :param way:
+    :return:
+    """
     way_lst = way.split()
     if way_lst[0] == 'cd' and len(way_lst) == 2:
         return True
@@ -52,8 +82,12 @@ def check_way(way: str):
 
 
 def main():
+    """
+    tie up all the program
+    :return:
+    """
     while True:
-        print('\033[96m' + f"Put the name of JSON file you'd like to navigate through" + '\033[0m')
+        print('\033[96m' + "Put the name of JSON file you'd like to navigate through" + '\033[0m')
         file_name = input('>>> ')
         try:
             data = data_loading(file_name)
