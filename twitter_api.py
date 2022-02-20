@@ -1,18 +1,28 @@
+"""
+Get data from Twitter API
+"""
 import urllib.request
-import twurl
 import json
 import jmespath
+import twurl
 
 
 def execute(acct):
-    TWITTER_URL = 'https://api.twitter.com/1.1/friends/list.json'
+    """
+    Get friends' screen name and location
+    (only if it's present)
+    :param acct:
+    :return:
+    """
+    TWITTER_URL = 'https://api.twitter.com/1.1/friends/list.json'  # pylint: disable=invalid-name
 
     url = twurl.augment(TWITTER_URL,
-                        {'screen_name': acct, 'count': '20'})
+                        {'screen_name': acct, 'count': '10'})
 
-    data = urllib.request.urlopen(url).read().decode()
+    data = urllib.request.urlopen(url).read().decode()  # pylint: disable=consider-using-with
 
-    js = json.loads(data)
+    js_friends = json.loads(data)
 
-    friends_list = jmespath.search("users[?location != ''].{Name: screen_name, Location: location}", js)
+    friends_list = jmespath.search("users[?location != ''].{Name: screen_name, Location: location}",
+                                   js_friends)
     return friends_list

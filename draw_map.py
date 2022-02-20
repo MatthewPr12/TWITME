@@ -1,9 +1,17 @@
+"""
+draw web map via folium package
+"""
+import random
 import folium  # pylint: disable=import-error
 from folium import plugins  # pylint: disable=import-error
-import random
 
 
 def create_map(friends):
+    """
+    draw map of friends
+    :param friends:
+    :return:
+    """
     my_map = folium.Map(location=[*friends[0]['Coords']], zoom_start=10)
     mini_map = plugins.MiniMap(toggle_display=True)
     my_map.add_child(mini_map)
@@ -27,9 +35,8 @@ def create_map(friends):
     return my_map
 
 
-
 if __name__ == "__main__":
-    friends = [{'Name': 'MelaniePodolyak', 'Location': 'Ukraine',
+    friends_l = [{'Name': 'MelaniePodolyak', 'Location': 'Ukraine',
                 'Coords': (49.4871968, 31.2718321)},
                {'Name': 'osmachka', 'Location': 'Ukraine, Lviv', 'Coords': (49.841952, 24.0315921)},
                {'Name': 'mooyouri', 'Location': 'м. Львів', 'Coords': (49.8447678, 24.0567693)},
@@ -40,7 +47,4 @@ if __name__ == "__main__":
                {'Name': 'TEDxUCU', 'Location': 'Львів, Україна', 'Coords': (49.841952, 24.0315921)},
                {'Name': 'The_OldLion', 'Location': 'Львів, вул. Старознесенська, 24-26',
                 'Coords': (49.8508107, 24.0524873012697)}]
-    print(create_map(friends))
-
-
-
+    print(create_map(friends_l))

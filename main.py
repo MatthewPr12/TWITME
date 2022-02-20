@@ -1,10 +1,12 @@
+"""
+create web app and tie up all the needed scripts
+"""
 from fastapi import FastAPI, Request, Form
-from typing import Optional
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from twitter_api import execute
 from geocoder import get_coords
-from fastapi.responses import HTMLResponse
 from draw_map import create_map
-from fastapi.templating import Jinja2Templates
 
 app = FastAPI(title='User Friends Locations')
 templates = Jinja2Templates(directory='maps')
@@ -12,11 +14,22 @@ templates = Jinja2Templates(directory='maps')
 
 @app.get("/", response_class=HTMLResponse)
 def write_home(request: Request):
+    """
+    home page
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse('home.html', {'request': request})
 
 
 @app.post("/submitform", response_class=HTMLResponse)
 async def get_username(request: Request, user_name: str = Form(...)):
+    """
+    return html map
+    :param request:
+    :param user_name:
+    :return:
+    """
     friends_list = execute(user_name)
     friends = get_coords(friends_list)
     my_map = create_map(friends)

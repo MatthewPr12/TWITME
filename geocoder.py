@@ -1,8 +1,16 @@
+"""
+get location
+"""
 from geopy.geocoders import Nominatim  # pylint: disable=import-error
 from geopy.extra.rate_limiter import RateLimiter  # pylint: disable=import-error
 
 
 def get_coords(friends_lst):
+    """
+    get exact longitude and latitude for every location
+    :param friends_lst:
+    :return:
+    """
     geocoder = RateLimiter(Nominatim(user_agent="TWITME").geocode, min_delay_seconds=1)
     # d = {'Name': 'stylebender', 'Location': 'Auckland New Zealand'}
     # print(geocoder(d['Location']).latitude)
@@ -17,6 +25,3 @@ def get_coords(friends_lst):
         except AttributeError:
             continue
     return friends
-
-
-
